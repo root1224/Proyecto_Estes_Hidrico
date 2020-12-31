@@ -16,14 +16,15 @@ Including another URLconf
 
 # Django
 from django.contrib import admin
-from django.urls import path, include
 from django.conf import settings
-from django.conf.urls.static import static  # Visualizar imagenes en pagina-admin
+from django.conf.urls.static import static
+from django.urls import path, include  # Visualizar imagenes en pagina-admin
     # https://docs.djangoproject.com/en/3.1/ref/settings/#media-root
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path("", include("users.urls")),
-    path("", include("detections.urls"))
+    path("", include(('users.urls','users'), namespace='users')),
+    path("", include(('detections.urls','detections'), namespace='detections'))
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

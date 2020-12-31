@@ -51,7 +51,7 @@
               <span>Support</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="{% url 'logout' %}" class="dropdown-item">
+            <a href="{% url 'users:logout' %}" class="dropdown-item">
               <i class="ni ni-user-run"></i>
               <span>Logout</span>
             </a>
@@ -115,7 +115,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">
+            <a class="nav-link" href="{% url 'users:logout' %}">
               <i class="ni ni-user-run text-red"></i> Logout
             </a>
           </li>

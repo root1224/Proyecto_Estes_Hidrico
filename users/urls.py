@@ -19,6 +19,12 @@ urlpatterns = [
         view=views.LogoutView.as_view(),
         name="logout"
     ),
+    path(
+        route='me/profile/',
+        view=views.ProfileDetailView.as_view(),
+        name='profile'
+
+    ),
     #path('register/', register_user, name="register"),
     #path("logout/", LogoutView.as_view(), name="logout")
 ]
