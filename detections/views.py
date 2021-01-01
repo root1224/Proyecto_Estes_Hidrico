@@ -8,10 +8,14 @@ from django.views.generic import CreateView, DetailView, ListView
 from detections.models import Detection
 
 
+class IndexView(LoginRequiredMixin, ListView):
+    """Return Index."""
+    template_name = 'index.html'
+    model = Detection
+    context_object_name = 'detetions'
 
 class DetectionIndexView(LoginRequiredMixin, ListView):
-    """Return all published detections."""
-
-    template_name = 'index.html'
+    """Return detections."""
+    template_name = 'icons.html'
     model = Detection
     context_object_name = 'detetions'
