@@ -22,17 +22,13 @@
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  {% if profile.picture %}
-                        <img
-                          alt="Image placeholder"
-                          src="{{ profile.picture.url }}"
-                        />
-                  {% else%}
-                        <img
-                          alt="Image placeholder"
-                          src="{% static 'assets/img/theme/default_profile.jpg' %}"
-                        />
-                  {% endif %}
+                  <div class="media">
+                    {% if request.user.profile.picture %}
+                          <img class="rounded-circle" src="{{ request.user.profile.picture.url }}" />
+                    {% else%}
+                          <img class="rounded-circle" src="{% static 'assets/img/theme/default_profile.jpg' %}"/>
+                    {% endif %}
+                  </div>
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
                   <span class="mb-0 text-sm  font-weight-bold">

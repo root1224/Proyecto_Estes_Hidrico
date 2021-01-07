@@ -8,6 +8,7 @@ from django.views.generic import DetailView, FormView, UpdateView
 
 # Forms
 from django import forms
+from users.forms import ProfileForm
 
 # Models
 from django.contrib.auth.models import User
@@ -27,13 +28,15 @@ class ProfileDetailView(LoginRequiredMixin, UpdateView):
     """Profile view."""
     template_name = 'profile.html'
     model = Profile
-    fields = ['phone_number', 'picture']
+    form_class = ProfileForm
 
-    def get_object(self):
-        """Return user's profile."""
+    def get_object(self, *args, **kwargs):
+        #user = get_object_or_404(User, pk=self.kwargs['pk'])
+
+        # We can also get user object using self.request.user  but that doesnt work
+        # for other models.
+
         return self.request.user.profile
 
-    def get_success_url(self):
-        """Return to user's profile."""
-        username = self.object.user.username
-        return reverse('users:profile')
+    def get_success_url(self, *args, **kwargs):
+        return reverse("users:profile")

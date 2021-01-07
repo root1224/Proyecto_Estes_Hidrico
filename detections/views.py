@@ -14,8 +14,10 @@ class IndexView(LoginRequiredMixin, ListView):
     model = Detection
     context_object_name = 'detetions'
 
-class DetectionIndexView(LoginRequiredMixin, ListView):
+class AllDetectionsView(LoginRequiredMixin, ListView):
     """Return detections."""
-    template_name = 'icons.html'
+    template_name = 'tables.html'
     model = Detection
-    context_object_name = 'detetions'
+    ordering = ('-created',)
+    paginate_by = 30
+    context_object_name = 'detections'

@@ -1,0 +1,56 @@
+
+
+<tr>
+  <th scope="row">
+    <div class="media align-items-center">
+      <div class="media-body">
+        <a href="{% url "detections:home" %}">
+          <span class="mb-0 text-sm">{{ detection.name }}</span>
+        </a>
+      </div>
+    </div>
+  </th>
+  <td>
+    <span class="badge badge-dot mr-4">
+      {% if detection.satatus_of_field == 'dead' %}
+        <i class="bg-danger"></i> DEAD
+      {% elif detection.satatus_of_field == 'save' %}
+        <i class="bg-warning"></i> SAVE
+      {% else %}
+        <i class="bg-success"></i> GOOD
+      {% endif %}
+    </span>
+  </td>
+  <td>
+    {{ detection.created }}
+  </td>
+  <td>
+    <div class="avatar-group">
+      <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="{{ detection.user.get_full_name }}">
+        <img alt="Image placeholder" src="{{ detection.profile.picture.url }}" class="rounded-circle">
+      </a>
+    </div>
+  </td>
+  <td>
+    <div class="d-flex align-items-center">
+      <span class="mr-2">60%</span>
+      <div>
+        <div class="progress">
+          <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+        </div>
+      </div>
+    </div>
+  </td>
+  <td class="text-right">
+    <div class="dropdown">
+      <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-ellipsis-v"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    </div>
+  </td>
+</tr>

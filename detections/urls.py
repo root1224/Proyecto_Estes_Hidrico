@@ -15,8 +15,8 @@ urlpatterns = [
     ),
     path(
         route='detections/',
-        view=views.DetectionIndexView.as_view(),
-        name='detections',
+        view=views.AllDetectionsView.as_view(),
+        name='all_detections',
     ),
     #path('register/', register_user, name="register"),
     #path("logout/", LogoutView.as_view(), name="logout")

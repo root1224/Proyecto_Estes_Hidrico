@@ -1,0 +1,28 @@
+template_name = 'profile.html'
+model = Profile
+fields = ['phone_number', 'picture']
+
+def get_object(self):
+    """Return user's profile."""
+    return self.request.user.profile
+
+def get_success_url(self):
+    """Return to user's profile."""
+    username = self.object.user.username
+    return reverse('users:profile')
+
+
+
+
+
+
+
+    template_name = 'profile.html'
+    model = Profile
+    #fields = ['phone_number', 'picture']
+    success_url = reverse_lazy('users:profile')
+    form_class = ProfileForm
+
+    def get_object(self):
+        """Return user's profile."""
+        return self.request.user.profile
