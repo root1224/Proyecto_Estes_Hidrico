@@ -19,5 +19,5 @@ class AllDetectionsView(LoginRequiredMixin, ListView):
     template_name = 'tables.html'
     model = Detection
     ordering = ('-created',)
-    paginate_by = 30
+    paginate_by = 5
     context_object_name = 'detections'
