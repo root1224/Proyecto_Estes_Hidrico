@@ -15,16 +15,107 @@
     </div>
 
     <div class="container-fluid mt--7">
-
+      <!-- Detectecion Image-->
       <div class="row">
-        <div class="col">
-          <div class="card shadow border-0">
-            <!--<div id="map-canvas" class="map-canvas" data-lat="40.748817" data-lng="-73.985428" style="height: 600px;"></div>-->
-            <img alt="Imagen_campo" src="{{ detection.picture.url }}">
+        <div class="col-xl-8 mb-5 mb-xl-0">
+          <div class="card bg-gradient-default shadow">
+
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-light ls-1 mb-1">Detection Photo</h6>
+                  <h2 class="text-white mb-0">{{ detection.name }}</h2>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="card shadow border-0">
+                <img alt="{{ detection.name }}" src="{{ detection.picture.url }}">
+              </div>
+            </div>
 
           </div>
         </div>
+        <div class="col-xl-4">
+          <div class="card shadow">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
+                  <h2 class="mb-0">Total orders</h2>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Chart -->
+              <div class="chart">
+                <canvas id="chart-orders" class="chart-canvas"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div class="row mt-4">
+        <div class="col-xl-12 mb-5 mb-xl-0">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Data</h3>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <!-- Data table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Creator: {{ detection.user.get_full_name }}</th>
+                    <th scope="col">Name: {{ detection.name }}</th>
+                    <th scope="col">
+                      Status: {{ detection.satatus_of_field }}
+
+                      {% if detection.satatus_of_field == 'good' %}
+                        <i class="fas fa-arrow-up text-success mr-3"></i>
+                      {% elif detection.satatus_of_field == 'save' %}
+                        <i class="fas fa-arrows-alt-v text-warning mr-3"></i>
+                      {% else %}
+                        <i class="fas fa-arrow-down text-danger mr-3"></i>
+                      {% endif %}
+                    </th>
+                    <th scope="col">Created: {{detection.created }}</th>
+                  </tr>
+                </thead>
+              </table>
+
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Note name</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Text</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for note in notes %}
+                    <tr>
+                      <th scope="row"> {{ note.name }} </th>
+                      <td> {{ note.user.get_full_name }} </td>
+                      <td> {{ note.created }} </td>
+                      <td> {{ note.text }} </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
 
       {% include "includes/footer.html" %}
 
