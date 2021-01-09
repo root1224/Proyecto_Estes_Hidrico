@@ -18,6 +18,11 @@ urlpatterns = [
         view=views.AllDetectionsView.as_view(),
         name='all_detections',
     ),
+    path(
+        route='<str:name>/',  # Detection Management
+        view=views.DetectionDetailView.as_view(),
+        name='detection_detail'
+    ),
     #path('register/', register_user, name="register"),
     #path("logout/", LogoutView.as_view(), name="logout")
 ]

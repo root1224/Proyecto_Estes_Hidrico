@@ -4,7 +4,7 @@
   <th scope="row">
     <div class="media align-items-center">
       <div class="media-body">
-        <a href="{% url "detections:home" %}">
+        <a href="{% url "detections:detection_detail" detection.name %}"> 
           <span style="color:white" class="mb-0 text-sm">{{ detection.name }}</span>
         </a>
       </div>

@@ -26,7 +26,7 @@ class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
 
 class ProfileDetailView(LoginRequiredMixin, UpdateView):
     """Profile view."""
-    template_name = 'profile.html'
+    template_name = 'users/profile.html'
     model = Profile
     form_class = ProfileForm
 
