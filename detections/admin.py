@@ -20,7 +20,7 @@ class DetectionAdmin(admin.ModelAdmin):
     """Detection admin."""
     inlines =(NoteInline,)
     # Campos a mostrar
-    list_display = ('pk','name','user','picture','satatus_of_field',)
+    list_display = ('pk','name','user','picture', 'picture_ndvi','satatus_of_field',)
     change_links = ['user']
 
     # Linkear campos

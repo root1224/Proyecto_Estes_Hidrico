@@ -26,12 +26,41 @@
                   <h6 class="text-uppercase text-light ls-1 mb-1">Detection Photo</h6>
                   <h2 class="text-white mb-0">{{ detection.name }}</h2>
                 </div>
+
+                <!-- Menu vertical -->
+                <!-- https://getbootstrap.com/docs/4.0/components/navs/ -->
+                <div class="col">
+                  <ul class="nav nav-pills justify-content-end">
+
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Type</a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item " id="rgb-tab" data-toggle="tab" href="#rgb" role="tab" aria-controls="rgb" >RGB</a>
+                        <a class="dropdown-item" href="#">Without ground</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" id="ndvi-tab" data-toggle="tab" href="#ndvi" role="tab" aria-controls="ndvi" >NDVI</a>
+                        <a class="dropdown-item" href="#">SAVI</a>
+                        <a class="dropdown-item" href="#">EVI2</a>
+                      </div>
+                    </li>
+
+                  </ul>
+                </div>
+
               </div>
             </div>
 
             <div class="card-body">
-              <div class="card shadow border-0">
-                <img alt="{{ detection.name }}" src="{{ detection.picture.url }}">
+              <div class="tab-content card shadow border-0">
+
+                <div class="tab-pane fade show active" id="rgb" role="tabpanel" aria-labelledby="rgb-tab">
+                  <img height="470px" alt="{{ detection.name }}" src="{{ detection.picture.url }}">
+                </div>
+
+                <div class="tab-pane fade" id="ndvi" role="tabpanel" aria-labelledby="ndvi-tab">
+                  <img height="470px" alt="{{ detection.name }}" src="{{ detection.picture_ndvi.url }}">
+                </div>
+
               </div>
             </div>
 
@@ -106,8 +135,7 @@
                         <td> {{ note.user.get_full_name }} </td>
                         <td> {{ note.created }} </td>
                         <td>
-                         <div style="width:200px; overflow:auto;">
-
+                         <div style="width:200px; height:auto;">
                           {{ note.text }}
                          </div>
                         </td>

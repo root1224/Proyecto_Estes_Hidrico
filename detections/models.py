@@ -26,8 +26,13 @@ class Detection(models.Model):
 
     name = models.CharField(max_length=20)
     picture = models.ImageField(
-        upload_to='detections/ortomosaic',
+        upload_to='detections/RGB',
     )
+
+    picture_ndvi = models.ImageField(
+        upload_to='detections/NDVI'
+    )
+
     satatus_of_field = models.CharField(
         max_length=10,
         choices=SATATUS_OF_FIELD,

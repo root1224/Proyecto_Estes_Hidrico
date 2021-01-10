@@ -26,3 +26,25 @@ def get_success_url(self):
     def get_object(self):
         """Return user's profile."""
         return self.request.user.profile
+
+
+
+
+
+
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Type</a>
+          <div class="dropdown-menu">
+            <div class="dropdown-header" style="color:#777;">Images</div>
+            <a class="dropdown-item" id="default-option" data-toggle="tab" href="#rgb" role="tab" aria-controls="rgb" >RGB</a>
+            <a class="dropdown-item" href="#">Without ground</a>
+
+            <div class="dropdown-header" style="color:#777;">Vegetacion Index</div>
+            <a class="dropdown-item" id="ndvi-tab" data-toggle="tab" href="#ndvi" role="tab" aria-controls="ndvi" >NDVI</a>
+            <a class="dropdown-item" href="#">SAVI</a>
+            <a class="dropdown-item" href="#">EVI2</a>
+            <div class="dropdown-divider"></div>
+          </div>
+        </li>
