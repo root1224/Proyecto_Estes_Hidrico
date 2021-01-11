@@ -99,6 +99,11 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link " href="{% url "detections:new_detection" %}">
+              <i class="ni ni-bullet-list-67 text-info"></i> New detection
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link " href="{% url "detections:last_detection" %}">
               <i class="ni ni-pin-3 text-orange"></i> Last detection
             </a>
@@ -108,12 +113,6 @@
               <i class="ni ni-single-02 text-yellow"></i> User profile
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="/tables.html">
-              <i class="ni ni-bullet-list-67 text-info"></i> Tables
-            </a>
-          </li>
-
           <li class="nav-item">
             <a class="nav-link" href="{% url 'users:logout' %}">
               <i class="ni ni-user-run text-red"></i> Logout

@@ -14,6 +14,11 @@ urlpatterns = [
         name='home'
     ),
     path(
+        route='new-detection/',
+        view=views.CreateDetectionView.as_view(),
+        name='new_detection'
+    ),
+    path(
         route='detections/',
         view=views.AllDetectionsView.as_view(),
         name='all_detections',

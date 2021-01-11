@@ -1,0 +1,124 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+{% load static %}
+
+    <!-- Header -->
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+         style="min-height: 600px; background-image: url(/static/assets/img/theme/perfile_background.jpg); background-size: cover; background-position: center top;">
+    </div>
+
+    <div class="container-fluid mt--13">
+
+      <form action="{% url 'detections:new_detection' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+
+              <div class="row justify-content-center">
+                <div class="justify-content-center">
+                  <img id="new" width="350px" src="{% static 'assets/img/theme/default_image.jpg' %}" alt="your image" />
+                </div>
+              </div>
+
+              <div class="row justify-content-center mt-4">
+                <div class="d-flex justify-content-between">
+                  <div class="media-body">
+                    <p class="btn btn-sm btn-default justify-content-center">
+                      <input type="file" name="picture" onchange="readURL(this);"/>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+
+          <div class="col-xl-8 order-xl-1">
+            <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                  <div class="row align-items-center">
+                    <div class="col-8">
+                      <h3 class="mb-0">New detection</h3>
+                    </div>
+                    <div class="col-4 text-right">
+                      <button type="submit" class="btn btn-sm btn-primary btn-block ">Save detection</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <h6 class="heading-small text-muted mb-4">Information</h6>
+                    <div class="pl-lg-4">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-username">Username</label>
+                            <input disabled
+                              type="text"
+                              name="username"
+                              id="input-username"
+                              class="form-control form-control-alternative"
+                              placeholder="Username"
+                              value="{{ request.user.username }}"
+                            >
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-email">Created</label>
+                            <input disabled
+                              class="form-control form-control-alternative"
+                              placeholder="{% now "SHORT_DATETIME_FORMAT" %}"
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-lg-6 ">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-first-name">Status of Field</label>
+                            <input disabled
+                              type="text"
+                              name="satatus_of_field"
+                              id="input-satatus-of-field"
+                              class="form-control form-control-alternative"
+                              placeholder="None"
+
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="my-4" />
+                    <!-- Description -->
+                    <h6 class="heading-small text-muted mb-4">Notes</h6>
+                    <div class="pl-lg-4">
+                      {# Phone number field #}
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-last-name">Phone number</label>
+                        <input
+                          type="text"
+                          name="phone_number"
+                          id="input-last-name"
+                          class="form-control form-control-alternative"
+                          placeholder="Phone number"
+                          value="{{ profile.phone_number }}"
+                        >
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      </form>
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
