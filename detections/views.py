@@ -20,7 +20,7 @@ class IndexView(LoginRequiredMixin, ListView):
 
 class AllDetectionsView(LoginRequiredMixin, ListView):
     """Return detections."""
-    template_name = 'detections/all-detections.html'
+    template_name = 'detections/all.html'
     model = Detection
     ordering = ('-created',)
     paginate_by = 5
@@ -62,7 +62,7 @@ class LastDetectionView(LoginRequiredMixin, DetailView):
 
 class CreateDetectionView(LoginRequiredMixin, CreateView):
     """Create a new detection."""
-    template_name = 'detections/new-detection.html'
+    template_name = 'detections/new.html'
     form_class = DetectionForm
     success_url = reverse_lazy('detections:last_detection')
 
