@@ -30,26 +30,31 @@ class AllDetectionsView(LoginRequiredMixin, ListView):
     paginate_by = 5
     context_object_name = 'detections'
 
-class DetectionDetailView(LoginRequiredMixin, DetailView):
+class DetectionDetailView(LoginRequiredMixin, DetailView, SingleTableView):
     """Detection detail view."""
     template_name = 'detections/detail.html'
     slug_field = 'name'
     slug_url_kwarg = 'name'
-    queryset = Detection.objects.all()
+    model = Detection
     context_object_name = 'detection'
+
+    def __init__(self, *args, **kwargs):
+        super(DetectionDetailView, self).__init__(*args, **kwargs)
+        self.object_list = self.get_queryset()
 
     def get_context_data(self, **kwargs):
         """Add detection's notes to context."""
         context = super().get_context_data(**kwargs)
         detection = self.get_object()
         context['notes'] = Note.objects.filter(note_detection=detection).order_by('-created')
+        context['table'] = NoteTable(Note.objects.filter(note_detection=detection).order_by('-created'))
         return context
 
 
 class LastDetectionView(LoginRequiredMixin, DetailView, SingleTableView):
     """Last detection view."""
     template_name = 'detections/detail.html'
-    model = Note
+    model = Detection
     context_object_name = 'detection'
     #table1 = NoteTable(Note.objects.filter(note_detection=Detection.objects.all().order_by('-created').first()))
 
