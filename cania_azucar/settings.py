@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Add apps
+    'django_tables2',
+
     # Local apps
     'users',
     'detections',

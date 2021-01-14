@@ -2,6 +2,8 @@
 
 {% block title %} Maps {% endblock title %}
 
+{% load render_table from django_tables2 %}
+
 {% block content %}
 
     <!-- Header -->
@@ -118,33 +120,7 @@
                   </tr>
                 </thead>
               </table>
-              {% if notes %}
-                <table class="table align-items-center table-flush">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col">Note name</th>
-                      <th scope="col">User</th>
-                      <th scope="col">Created</th>
-                      <th scope="col">Text</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for note in notes %}
-                      <tr>
-                        <th scope="row"> {{ note.name }} </th>
-                        <td> {{ note.user.get_full_name }} </td>
-                        <td> {{ note.created }} </td>
-                        <td>
-                         <div style="width:200px; height:auto;">
-                          {{ note.text }}
-                         </div>
-                        </td>
-
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              {% endif %}
+              {% render_table table %}
             </div>
           </div>
         </div>

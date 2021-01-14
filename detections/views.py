@@ -4,6 +4,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, DetailView, ListView
 from django.shortcuts import redirect
+from django_tables2 import SingleTableView
+
+# Tables
+from detections.tables import NoteTable
 
 # Forms
 from detections.forms import DetectionForm
@@ -42,11 +46,16 @@ class DetectionDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class LastDetectionView(LoginRequiredMixin, DetailView):
+class LastDetectionView(LoginRequiredMixin, DetailView, SingleTableView):
     """Last detection view."""
     template_name = 'detections/detail.html'
-    queryset = Detection.objects.all()
+    model = Note
     context_object_name = 'detection'
+    #table1 = NoteTable(Note.objects.filter(note_detection=Detection.objects.all().order_by('-created').first()))
+
+    def __init__(self, *args, **kwargs):
+        super(LastDetectionView, self).__init__(*args, **kwargs)
+        self.object_list = self.get_queryset()
 
     def get_object(self, queryset=None):
         object_instance = Detection.objects.all().order_by('-created').first()
@@ -57,6 +66,7 @@ class LastDetectionView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         detection = self.get_object()
         context['notes'] = Note.objects.filter(note_detection=detection).order_by('-created')
+        context['table'] = NoteTable(Note.objects.filter(note_detection=Detection.objects.all().order_by('-created').first()))
         return context
 
 
