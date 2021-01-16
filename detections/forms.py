@@ -12,8 +12,5 @@ class DetectionForm(forms.ModelForm):
 
     class Meta:
         """Form settings."""
-
         model = Detection
-        fields = ('user', 'name', 'picture', 'satatus_of_field')
-
-        
+        fields = ('user', 'name', 'picture', 'picture_ndvi', 'satatus_of_field')

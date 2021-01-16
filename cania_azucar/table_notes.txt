@@ -1,0 +1,47 @@
+{% if notes %}
+  <table class="table align-items-center table-flush">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Note name</th>
+        <th scope="col">User</th>
+        <th scope="col">Created</th>
+        <th scope="col">Text</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for note in notes %}
+        <tr>
+          <th scope="row"> {{ note.name }} </th>
+          <td> {{ note.user.get_full_name }} </td>
+          <td> {{ note.created }} </td>
+          <td>
+           <div style="width:200px; height:auto;">
+            {{ note.text }}
+           </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
+from django_tables2 import SingleTableView
+{% render_table table %}
+class LastDetectionView(LoginRequiredMixin, DetailView, SingleTableView):
+    """Last detection view."""
+    template_name = 'detections/detail.html'
+    context_object_name = 'detection'
+    table_class = NoteTable
+
+    def __init__(self, *args, **kwargs):
+        super(LastDetectionView, self).__init__(*args, **kwargs)
+        self.object_list = self.get_queryset()
+
+    def get_queryset(self):
+        detection = self.get_object()
+        queryset = Note.objects.filter(note_detection=detection).order_by('-created')
+        return queryset
+
+    def get_object(self):
+        object_instance = Detection.objects.all().order_by('-created').first()
+        return object_instance
