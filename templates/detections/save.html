@@ -46,12 +46,15 @@
                 <div class="tab-content card shadow border-0">
 
                   <div class="tab-pane fade show active" id="rgb" role="tabpanel" aria-labelledby="rgb-tab">
-                    <img width="275px" src="{{MEDIA_URL}}/temp/bands/{{request.user.username}}/RGB_temp.JPG" alt="RGB" />
+                    <img width="275px" name="picture" src="{{MEDIA_URL}}/temp/bands/{{request.user.username}}/RGB_temp.JPG" alt="RGB" />
                   </div>
 
                   <div class="tab-pane fade" id="ndvi" role="tabpanel" aria-labelledby="ndvi-tab">
-                    <img width="275px" src="{{MEDIA_URL}}/temp/results/{{request.user.username}}/NDVI.jpg" alt="NDVI" />
+                    <img width="275px" name="picture_ndvi" src="{{MEDIA_URL}}/temp/results/{{request.user.username}}/NDVI.jpg" alt="NDVI" />
                   </div>
+
+                  <input class="form-control {% if form.picture.errors %}is-invalid{% endif %}" type="file" name="picture" value="">
+                  <input  class="form-control {% if form.picture_ndvi.errors %}is-invalid{% endif %}" type="file" name="picture_ndvi" value="">
 
                 </div>
               </div>
@@ -91,6 +94,7 @@
                           <div class="form-group">
                             <label class="form-control-label" for="input-name">Name</label>
                             <input
+                              class="form-control {% if form.name.errors %}is-invalid{% endif %}"
                               type="text"
                               name="name"
                               class="form-control form-control-alternative"
@@ -103,13 +107,13 @@
                         <div class="col-lg-6 ">
                           <div class="form-group">
                             <label class="form-control-label" for="input-status">Status of Field</label>
-                            <div class="row">
-                              <select id="id_satatus_of_field" name="satatus_of_field">
-                                <option value="dead">Dead</option>
-                                <option value="save">Save</option>
-                                <option value="good">Good</option>
-                              </select>
-                            </div>
+                          <div class="row">
+                            <select class="" name="satatus_of_field">
+                              <option value="save">Save</option>
+                              <option value="dead">Dead</option>
+                              <option value="good">Good</option>
+                            </select>
+                          </div>
                           </div>
                         </div>
                         <div class="col-lg-6">

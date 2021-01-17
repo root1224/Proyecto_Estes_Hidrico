@@ -1,6 +1,6 @@
 """Detections views."""
 # Django
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, DetailView, ListView
 from django.shortcuts import redirect
@@ -18,7 +18,7 @@ from detections.forms import DetectionForm
 from detections.models import Detection, Note
 
 # MyApps
-from azucar.app import SaveFile, CalculateVi
+from azucar.app import SaveFile, CalculateVi, SaveDetection
 
 
 class IndexView(LoginRequiredMixin, ListView):
@@ -80,11 +80,9 @@ class LastDetectionView(LoginRequiredMixin, DetailView, SingleTableView):
         return context
 
 
-class SaveDetectionView(LoginRequiredMixin, CreateView):
-    """Save new detection."""
-    template_name = 'detections/save.html'
-    form_class = DetectionForm
-    success_url = reverse_lazy('detections:last_detection')
+class NewDetectionView(LoginRequiredMixin, TemplateView):
+    """New detection view."""
+    template_name = "detections/new.html"
 
     def get_context_data(self, **kwargs):
         """Add user and profile to context."""
@@ -93,28 +91,32 @@ class SaveDetectionView(LoginRequiredMixin, CreateView):
         context['profile'] = self.request.user.profile
         return context
 
-
-
-class NewDetectionView(LoginRequiredMixin, TemplateView):
-    """New detection view."""
-    template_name = "detections/new.html"
-
     def post(self, request, *args, **kwargs):
-        """
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            # <process form cleaned data>
-            return HttpResponseRedirect('/success/')
-        """
-        for request_file in request.FILES.getlist('files'):
-            SaveFile(request_file, request.user.username)
+        if 'detect' in request.POST:
+            for request_file in request.FILES.getlist('files'):
+                SaveFile(request_file, request.user.username)
 
-        if CalculateVi(request.user.username):
-            """Success VI calculation."""
-            template = reverse_lazy('detections:save_detection')
-            return redirect(template)
+            CalculateVi(request.user.username)
+            state='dead'
+            context = {
+                'save_detect' : True,
+                'state': state
+                }
+            return render(request, self.template_name, context)
+
+        elif 'save' in request.POST:
+            user = request.user
+            profile = request.user.profile
+            name = request.POST["name"]
+            status = request.POST["satatus_of_field"]
+
+            SaveDetection(request,user,profile,name,status)
+            return redirect('detections:last_detection')
+
 
         return render(request, self.template_name)
+
+
 
 
 """

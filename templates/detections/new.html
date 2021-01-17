@@ -15,66 +15,62 @@
 
       <form action="{% url 'detections:new_detection' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="card bg-secondary shadow">
-          <div class="card-header bg-white border-0">
-            <div class="row align-items-center">
-              <div class="col-7">
-                <h3 class="mb-0">New detection</h3>
+        <div class="row">
+          <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+            <div class="card bg-gradient-default shadow">
+
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h6 class="text-uppercase text-light ls-1 mb-1">Detection Photo</h6>
+                  </div>
+                  <div class="col">
+                    <ul class="nav nav-pills justify-content-end">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Type</a>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item " id="rgb-tab" data-toggle="tab" href="#rgb" role="tab" aria-controls="rgb" >RGB</a>
+                          <a class="dropdown-item" href="#">Without ground</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" id="ndvi-tab" data-toggle="tab" href="#ndvi" role="tab" aria-controls="ndvi" >NDVI</a>
+                          <a class="dropdown-item" href="#">SAVI</a>
+                          <a class="dropdown-item" href="#">EVI2</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <div class="col-3 text-right">
-                <button type="submit" name="detect" class="btn btn-sm btn-primary btn-block ">Detection</button>
+
+              <div class="card-body">
+                <div class="tab-content card shadow border-0">
+
+                  <div class="tab-pane fade show active" id="rgb" role="tabpanel" aria-labelledby="rgb-tab">
+                    {% if save_detect %}
+                      <img width="272px" name="picture" src="{{MEDIA_URL}}/temp/bands/{{request.user.username}}/RGB_temp.JPG" alt="RGB" />
+                    {% else %}
+                      <img width="272px" src="{% static 'assets/img/theme/default_image.jpg' %}" alt="RGB"/>
+                    {% endif %}
+                  </div>
+
+                  <div class="tab-pane fade" id="ndvi" role="tabpanel" aria-labelledby="ndvi-tab">
+                    {% if save_detect %}
+                      <img width="272px" name="picture_ndvi" src="{{MEDIA_URL}}/temp/results/{{request.user.username}}/NDVI.jpg" alt="NDVI" />
+                    {% else %}
+                      <img width="272px" src="{% static 'assets/img/theme/default_image.jpg' %}" alt="RGB"/>
+                    {% endif %}
+                  </div>
+
+
+                </div>
               </div>
+
             </div>
           </div>
-          <div class="card-body">
-            <h6 class="heading-small text-muted mb-4">Information</h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-username">Username</label>
-                    <input disabled
-                    type="text"
-                    class="form-control form-control-alternative"
-                    placeholder="{{ request.user.username }}"
-                    >
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <div class="col">
-                      <label class="form-control-label" for="input-files">Files</label>
-                    </div>
-                    <div class="col">
-                      <input type="file" id="files" name="files" multiple><br><br>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row ">
-                <div class="col-lg-6 ">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-status-field">Status of Field</label>
-                    <input disabled
-                    type="text"
-                    name="satatus_of_field"
-                    id="input-satatus-of-field"
-                    class="form-control form-control-alternative"
-                    placeholder="None"
-                    >
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-created">Created</label>
-                    <input disabled
-                    class="form-control form-control-alternative"
-                    placeholder="{% now "SHORT_DATETIME_FORMAT" %}"
-                    >
-                    <!-- {% now "SHORT_DATETIME_FORMAT" %} -->
-                  </div>
-                </div>
-              </div>
+
+          <div class="col-xl-8 order-xl-1">
+            <div class="card bg-secondary shadow">
+              {% include "detections/new-data.html" %}
             </div>
           </div>
         </div>

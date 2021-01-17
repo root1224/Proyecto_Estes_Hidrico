@@ -2,14 +2,21 @@
 
 #Django
 from django.core.files.storage import FileSystemStorage
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
+# Models
+from detections.models import Detection
 
 # Others
 import os
+from io import StringIO, BytesIO
 import rasterio
+from django.core.files.base import ContentFile
 
 # Math libs
 import numpy as np
 import matplotlib.pyplot as plt  # Plot images
+from PIL import Image
 
 
 def SaveFile(request_file, user):
@@ -101,4 +108,36 @@ def CalculateVi(user):
         color_map = color_map,
         vi_path = path_ndvi_color
     )
+
+
+def SaveDetection(request,user,profile,name,status):
+    """Save detection in DB."""
+    #https://stackoverflow.com/questions/35581356/save-matplotlib-plot-image-into-django-model/35633462
+    path_picture = 'media/temp/bands/'+str(request.user.username)+'/RGB_temp.JPG'
+    path_picture_ndvi ='media/temp/results/'+str(request.user.username)+'/NDVI.jpg'
+
+    picture_name = 'RGB.jpg'
+    picture_ndvi_name = 'NDVI.jpg'
+
+    picture_file = Image.open(path_picture)
+    picturer_ndvi_file = Image.open(path_picture_ndvi)
+
+    tempfile_io = BytesIO()
+    tempfile_ndvi_io = BytesIO()
+
+    picture_file.save(tempfile_io, format='JPEG')
+    picturer_ndvi_file.save(tempfile_ndvi_io, format='JPEG')
+
+    picture_file = InMemoryUploadedFile(tempfile_io, None, picture_name,'image/jpeg',tempfile_io.tell, None)
+    picture_ndvi_file = InMemoryUploadedFile(tempfile_ndvi_io, None, picture_ndvi_name,'image/jpeg',tempfile_ndvi_io.tell, None)
+
+    detection_instance = Detection(
+        user=user,
+        profile=profile,
+        name=name,
+        satatus_of_field=status,
+        )
+    detection_instance.picture.save(picture_name, picture_file)
+    detection_instance.picture_ndvi.save(picture_ndvi_name, picture_ndvi_file)
+    detection_instance.save()
     return True
