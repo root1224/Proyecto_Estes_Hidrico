@@ -16750,7 +16750,7 @@ textarea[resize="horizontal"] {
 }
 
 .navbar-horizontal .navbar-brand img {
-  height: 30px;
+  height: 70px;
 }
 
 .navbar-horizontal .navbar-dark .navbar-brand {
@@ -17276,7 +17276,7 @@ textarea[resize="horizontal"] {
   }
 
   .navbar-vertical.navbar-expand-md .navbar-brand-img {
-    max-height: 2.5rem;
+    max-height: 3.5rem; /*2.5*/
   }
 
   .navbar-vertical.navbar-expand-md .navbar-user {

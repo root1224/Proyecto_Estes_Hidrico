@@ -113,6 +113,7 @@ def CalculateVi(user):
 def SaveDetection(request,user,profile,name,status):
     """Save detection in DB."""
     #https://stackoverflow.com/questions/35581356/save-matplotlib-plot-image-into-django-model/35633462
+    #https://stackoverflow.com/questions/3723220/how-do-you-convert-a-pil-image-to-a-django-file
     path_picture = 'media/temp/bands/'+str(request.user.username)+'/RGB_temp.JPG'
     path_picture_ndvi ='media/temp/results/'+str(request.user.username)+'/NDVI.jpg'
 
