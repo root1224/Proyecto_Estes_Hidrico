@@ -49,7 +49,7 @@
                     {% if save_detect %}
                       <img width="272px" name="picture" src="{{MEDIA_URL}}/temp/bands/{{request.user.username}}/RGB_temp.JPG" alt="RGB" />
                     {% else %}
-                      <img width="272px" src="{% static 'assets/img/theme/default_image.jpg' %}" alt="RGB"/>
+                      <img width="276px" src="{% static 'assets/img/theme/default_image.jpg' %}" alt="RGB"/>
                     {% endif %}
                   </div>
 
@@ -57,7 +57,7 @@
                     {% if save_detect %}
                       <img width="272px" name="picture_ndvi" src="{{MEDIA_URL}}/temp/results/{{request.user.username}}/NDVI.jpg" alt="NDVI" />
                     {% else %}
-                      <img width="272px" src="{% static 'assets/img/theme/default_image.jpg' %}" alt="RGB"/>
+                      <img width="276px" src="{% static 'assets/img/theme/default_image.jpg' %}" alt="RGB"/>
                     {% endif %}
                   </div>
 
