@@ -1,7 +1,12 @@
 <div class="card-header bg-white border-0">
   <div class="row align-items-center">
-    <div class="col-7">
+    <div class="col-4">
       <h3 class="mb-0">New detection</h3>
+    </div>
+    <div class="col-3">
+      {% if msg %}
+        <label for="Message Error" style="color:red">{{msg}}</label>
+      {% endif %}
     </div>
     <div class="col-2 text-right">
       {% if save_detect %}

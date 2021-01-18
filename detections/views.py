@@ -93,14 +93,38 @@ class NewDetectionView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         if 'detect' in request.POST:
-            for request_file in request.FILES.getlist('files'):
-                SaveFile(request_file, request.user.username)
+            files_detection = request.FILES.getlist('files')
+            if files_detection:
+                if len(files_detection) == 3:
+                    extention = []
+                    if not any("RGB" in s.name for s in files_detection):
+                        extention.append("RGB")
+                    if not any("NIR" in s.name for s in files_detection):
+                        extention.append("NIR")
+                    if not any("RED" in s.name for s in files_detection):
+                        extention.append("RED")
 
-            CalculateVi(request.user.username)
-            state='dead'
-            context = {
-                'save_detect' : True,
-                'state': state
+                    if not extention:
+                        for request_file in files_detection:
+                            SaveFile(request_file, request.user.username)
+
+                        CalculateVi(request.user.username)
+                        state='dead'
+                        context = {
+                            'save_detect' : True,
+                            'state': state
+                            }
+                    else:
+                        context = { 'msg' : 'Select files: '+','.join([str(n) for n in extention]) }
+
+                else:
+                    context = {
+                        'msg' : 'Select three files.'
+                    }
+
+            else:
+                context = {
+                    'msg' : 'Select files.'
                 }
             return render(request, self.template_name, context)
 
