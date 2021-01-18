@@ -107,40 +107,13 @@ class NewDetectionView(LoginRequiredMixin, TemplateView):
         elif 'save' in request.POST:
             user = request.user
             profile = request.user.profile
-            name = request.POST["name"]
+            detection_name = request.POST["name"]
             status = request.POST["satatus_of_field"]
+            note_name = request.POST.getlist('note_name')
+            note_text = request.POST.getlist('note_text')
 
-            SaveDetection(request,user,profile,name,status)
+            SaveDetection(request,user,profile,detection_name,status,note_name,note_text)
             return redirect('detections:last_detection')
 
 
         return render(request, self.template_name)
-
-
-
-
-"""
-class CreateDetectionView(LoginRequiredMixin):
-
-    template_name = 'detections/new.html'
-    model = Detection
-    #form_class = DetectionForm
-    #success_url = reverse_lazy('detections:last_detection')
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.method == 'POST':
-            if "detect" in request.POST:
-                for file in request.FILES.getlist('files'):
-                    img_save_path = "/media/temp/" + str(file)
-                    with open(img_save_path, 'wb+') as f:
-                        f.write(file.read())
-
-        return super(CreateDetectionView, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        Add user and profile to context.
-        context = super().get_context_data(**kwargs)
-        context['user'] = self.request.user
-        context['profile'] = self.request.user.profile
-        return context
-"""

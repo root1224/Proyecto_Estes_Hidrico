@@ -64,22 +64,18 @@
     // create row
     var row = document.createElement("TR");
     var td1 = document.createElement("TD")
-    var strHtml1 = "<INPUT TYPE=\"text\" NAME=\"in_name\" SIZE=\"10\" class=\"form-control\';\">";
+    var strHtml1 = "<INPUT TYPE=\"text\" NAME=\"note_name\" SIZE=\"10\" class=\"form-control\';\">";
     td1.innerHTML=strHtml1 ;
     var td2 = document.createElement("TD")
-    var strHtml2 = "<INPUT disabled TYPE=\"text\" NAME=\"in_name\" SIZE=\"8\" placeholder=\"{{request.user.username}}\" class=\"form-control\';\">";
-    td2.innerHTML=strHtml2;
+    var strHtml2 = "<INPUT TYPE=\"text\" NAME=\"note_text\" SIZE=\"20\" class=\"form-control\';\">";
+    td2.innerHTML=strHtml2 ;
     var td3 = document.createElement("TD")
-    var strHtml3 = "<INPUT TYPE=\"text\" NAME=\"in_name\" SIZE=\"10\" class=\"form-control\';\">";
+    var strHtml3 = "<INPUT disabled TYPE=\"text\" SIZE=\"15\" placeholder=\"{% now "SHORT_DATETIME_FORMAT" %}\" class=\"form-control\';\">";
     td3.innerHTML=strHtml3 ;
-    var td4 = document.createElement("TD")
-    var strHtml4 = "<INPUT disabled TYPE=\"text\" NAME=\"in_name\" SIZE=\"15\" placeholder=\"{% now "SHORT_DATETIME_FORMAT" %}\" class=\"form-control\';\">";
-    td4.innerHTML=strHtml4 ;
     // append data to row
     row.appendChild(td1);
     row.appendChild(td2);
     row.appendChild(td3);
-    row.appendChild(td4);
     // add to count variable
     count = parseInt(count) + 1;
     // append row to table

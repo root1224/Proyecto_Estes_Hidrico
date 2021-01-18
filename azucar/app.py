@@ -5,7 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 # Models
-from detections.models import Detection
+from detections.models import Detection, Note
 
 # Others
 import os
@@ -110,7 +110,7 @@ def CalculateVi(user):
     )
 
 
-def SaveDetection(request,user,profile,name,status):
+def SaveDetection(request,user,profile,detection_name,status,note_name,note_text):
     """Save detection in DB."""
     #https://stackoverflow.com/questions/35581356/save-matplotlib-plot-image-into-django-model/35633462
     #https://stackoverflow.com/questions/3723220/how-do-you-convert-a-pil-image-to-a-django-file
@@ -135,10 +135,20 @@ def SaveDetection(request,user,profile,name,status):
     detection_instance = Detection(
         user=user,
         profile=profile,
-        name=name,
+        name=detection_name,
         satatus_of_field=status,
         )
     detection_instance.picture.save(picture_name, picture_file)
     detection_instance.picture_ndvi.save(picture_ndvi_name, picture_ndvi_file)
     detection_instance.save()
+
+    for n_name,n_text in zip(note_name,note_text):
+        note_instance = Note(
+            note_detection=detection_instance,
+            name=n_name,
+            user=user,
+            text=n_text,
+        )
+        note_instance.save()
+
     return True
