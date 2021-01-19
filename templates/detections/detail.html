@@ -120,7 +120,31 @@
                   </tr>
                 </thead>
               </table>
-              {% render_table table %}
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <th class="orderable">
+                      <a href="?sort=name">Name</a>
+                    </th>
+                    <th class="orderable">
+                      <a href="?sort=user">User</a>
+                    </th>
+                    <th class="orderable">
+                      <a href="?sort=text">Text</a>
+                    </th>
+                    <th class="desc orderable">
+                      <a href="?sort=created">Created</a>
+                    </th>
+                    <th></th>
+                  </thead>
+                  <tbody>
+                    {% for note in notes %}
+                      {% include "detections/table-notes.html" %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
             </div>
           </div>
         </div>

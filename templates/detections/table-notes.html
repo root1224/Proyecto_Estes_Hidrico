@@ -1,0 +1,26 @@
+<tr>
+  <td>{{note.name}}</td>
+  <td>{{note.user}}</td>
+  <td>{{note.text}}</td>
+  <td>{{note.created}}</td>
+  <td>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="id_note" value={{note.id}}>
+      {% if note.user == request.user %}
+        <button
+          data-toggle="tooltip"
+          title="Please note that deletion cannot be undone"
+          type="submit"
+          name="delete"
+          class="btn btn-danger btn-xs">Delete
+        </button>
+        {% else %}
+          <button disabled
+            data-toggle="tooltip"
+            class="btn btn-danger btn-xs">Delete
+          </button>
+        {% endif %}
+    </form>
+  </td>
+</tr>

@@ -8,8 +8,6 @@ from django_tables2 import SingleTableView
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
 
-# Tables
-from detections.tables import NoteTable
 
 # Forms
 from detections.forms import DetectionForm
@@ -43,6 +41,7 @@ class DetectionDetailView(LoginRequiredMixin, DetailView, SingleTableView):
     model = Detection
     context_object_name = 'detection'
 
+
     def __init__(self, *args, **kwargs):
         super(DetectionDetailView, self).__init__(*args, **kwargs)
         self.object_list = self.get_queryset()
@@ -52,8 +51,16 @@ class DetectionDetailView(LoginRequiredMixin, DetailView, SingleTableView):
         context = super().get_context_data(**kwargs)
         detection = self.get_object()
         context['notes'] = Note.objects.filter(note_detection=detection).order_by('-created')
-        context['table'] = NoteTable(Note.objects.filter(note_detection=detection).order_by('-created'))
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data()
+        if 'delete' in request.POST:
+            id = request.POST['id_note']
+            note_instance= Note.objects.get(id=id)
+            note_instance.delete()
+        return render(request, 'detections/detail.html', context)
 
 
 class LastDetectionView(LoginRequiredMixin, DetailView, SingleTableView):
@@ -61,7 +68,6 @@ class LastDetectionView(LoginRequiredMixin, DetailView, SingleTableView):
     template_name = 'detections/detail.html'
     model = Detection
     context_object_name = 'detection'
-    #table1 = NoteTable(Note.objects.filter(note_detection=Detection.objects.all().order_by('-created').first()))
 
     def __init__(self, *args, **kwargs):
         super(LastDetectionView, self).__init__(*args, **kwargs)
@@ -76,8 +82,16 @@ class LastDetectionView(LoginRequiredMixin, DetailView, SingleTableView):
         context = super().get_context_data(**kwargs)
         detection = self.get_object()
         context['notes'] = Note.objects.filter(note_detection=detection).order_by('-created')
-        context['table'] = NoteTable(Note.objects.filter(note_detection=Detection.objects.all().order_by('-created').first()))
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data()
+        if 'delete' in request.POST:
+            id = request.POST['id_note']
+            note_instance= Note.objects.get(id=id)
+            note_instance.delete()
+        return render(request, 'detections/detail.html', context)
 
 
 class NewDetectionView(LoginRequiredMixin, TemplateView):
