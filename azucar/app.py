@@ -11,12 +11,16 @@ from detections.models import Detection, Note
 import os
 from io import StringIO, BytesIO
 import rasterio
+from rasterio.plot import reshape_as_raster, reshape_as_image
 from django.core.files.base import ContentFile
 
 # Math libs
 import numpy as np
 import matplotlib.pyplot as plt  # Plot images
 from PIL import Image
+
+# My apps
+from .clous import cloustering
 
 
 def SaveFile(request_file, user):
@@ -60,11 +64,26 @@ def NDVI(RED, NIR):
 
 def plot_vi(vi, N, color_map, vi_path):
     """Save or plot vegetation index image."""
-    # Guardar imagen simple de indice de vegetacion
-    plt.figure(figsize=(16.92,12.72), dpi=100)
-    plt.imshow(vi, cmap=color_map)
-    plt.axis("off")
-    plt.savefig(vi_path, dpi=100, bbox_inches='tight', pad_inches=0)
+    fs = FileSystemStorage()
+    if fs.exists(vi_path):
+        fs.delete(vi_path)
+
+    if N is None:
+        # Guardar imagen simple de indice de vegetacion
+        plt.figure(figsize=(16.92,12.72), dpi=100)
+        plt.imshow(vi, cmap=color_map)
+        plt.axis("off")
+        plt.savefig(vi_path, dpi=100, bbox_inches='tight', pad_inches=0)
+    else:
+        # Obtener las escalas de colores
+        cmap = plt.get_cmap(color_map, N)
+        # Segmentacion por cloustering
+        img,vmin,vmax = cloustering(vi,N)
+        # Guardar imagen cloustering de indice de vegetacion
+        plt.figure(figsize=(16.92,12.72), dpi=100)
+        plt.imshow(img, cmap=cmap,vmin=vmin, vmax=vmax)
+        plt.axis("off")
+        plt.savefig(vi_path, dpi=100, bbox_inches='tight', pad_inches=0)
 
 
 
@@ -152,3 +171,39 @@ def SaveDetection(request,user,profile,detection_name,status,note_name,note_text
         note_instance.save()
 
     return True
+
+def rgb2gray(img,path,img_path):
+    if not os.path.exists(path):
+        try:
+            os.mkdir(path)
+        except OSError:
+            print ("Creation of the directory %s failed" % path)
+    img = Image.open(img).convert('L')
+    img.save(img_path)
+
+
+def MakeCloustering(user,number,path_detection):
+    """Make cloustering."""
+
+    # Paths
+    path = os.getcwd()
+    path_clouster = path + '/media/temp/clouster/' + str(user) + '/'
+    clouster_vi = path_clouster + 'clouster_done.jpg'
+
+    picture_path = path + '/media' + path_detection
+
+    # Values of plot_vi
+    rgb2gray(picture_path,path_clouster,clouster_vi) # Img a convertir, path en donde se guarda
+
+    vi = rasterio.open(clouster_vi).read()  # Vegetation index
+    n_clouster = number       # Clouster number
+    color_map = 'RdYlGn'    # Color map
+
+
+    # Export VI image
+    plot_vi(
+        vi = reshape_as_image(vi),
+        N = n_clouster,
+        color_map = color_map,
+        vi_path = clouster_vi
+    )

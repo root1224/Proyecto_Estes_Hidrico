@@ -16,7 +16,7 @@ from detections.forms import DetectionForm
 from detections.models import Detection, Note
 
 # MyApps
-from azucar.app import SaveFile, CalculateVi, SaveDetection
+from azucar.app import SaveFile, CalculateVi, SaveDetection, MakeCloustering
 
 
 class IndexView(LoginRequiredMixin, ListView):
@@ -56,10 +56,23 @@ class DetectionDetailView(LoginRequiredMixin, DetailView, SingleTableView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data()
-        if 'delete' in request.POST:
+        if 'cloustering' in request.POST:
+            detection = self.get_object()
+            if int(request.POST['n_clouster']) != 0:
+                if request.POST['type_vi'] == 'ndvi':
+                    type_vi = 'ndvi'
+                    number = request.POST['n_clouster']
+                    picture_url = detection.picture_ndvi.url
+
+                    MakeCloustering(request.user,int(number),picture_url)
+
+                    context['done_clouster'] = type_vi
+
+        elif 'delete' in request.POST:
             id = request.POST['id_note']
             note_instance= Note.objects.get(id=id)
             note_instance.delete()
+
         return render(request, 'detections/detail.html', context)
 
 

@@ -53,17 +53,7 @@
             </div>
 
             <div class="card-body">
-              <div class="tab-content card shadow border-0">
-
-                <div class="tab-pane fade show active" id="rgb" role="tabpanel" aria-labelledby="rgb-tab">
-                  <img height="470px" alt="{{ detection.name }}" src="{{ detection.picture.url }}">
-                </div>
-
-                <div class="tab-pane fade" id="ndvi" role="tabpanel" aria-labelledby="ndvi-tab">
-                  <img height="470px" alt="{{ detection.name }}" src="{{ detection.picture_ndvi.url }}">
-                </div>
-
-              </div>
+              {% include "detections/detail-vi.html" %}
             </div>
 
           </div>

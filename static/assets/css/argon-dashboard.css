@@ -20687,4 +20687,9 @@ pre>code.highlight {
   margin-left: 1rem;
 }
 
+.space {
+  margin:0;
+  padding:0;
+  height:10px;
+}
 /*# sourceMappingURL=dashboard-free.css.map */
