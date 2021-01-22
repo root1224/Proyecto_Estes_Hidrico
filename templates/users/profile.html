@@ -48,7 +48,7 @@
                     <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                       <div class="d-flex justify-content-between">
                         <div class="media-body">
-                          <p class="btn btn-sm btn-default float-right"><input type="file" name="picture"></p>
+                          <p class="btn btn-sm btn-default float-right"><input type="file" name="picture" value="None"></p>
                         </div>
                       </div>
                     </div>
@@ -87,7 +87,7 @@
                             <input
                               type="text"
                               name="username"
-                              id="input-username"
+                              id="username"
                               class="form-control form-control-alternative"
                               placeholder="Username"
                               value="{{ request.user.username }}"
@@ -100,9 +100,10 @@
                             <input
                               type="email"
                               name="email"
-                              id="input-email"
+                              id="email"
                               class="form-control form-control-alternative"
                               placeholder="{{ request.user.email }}"
+                              value="{{ request.user.email }}"
                             >
                           </div>
                         </div>
@@ -114,7 +115,7 @@
                             <input
                               type="text"
                               name="first_name"
-                              id="input-first-name"
+                              id="first_name"
                               class="form-control form-control-alternative"
                               placeholder="First name"
                               value="{{ request.user.first_name }}"
@@ -127,7 +128,7 @@
                             <input
                               type="text"
                               name="last_name"
-                              id="input-last-name"
+                              id="last_name"
                               class="form-control form-control-alternative"
                               placeholder="Last name"
                               value="{{ request.user.last_name }}"
@@ -146,7 +147,7 @@
                         <input
                           type="text"
                           name="phone_number"
-                          id="input-last-name"
+                          id="phone_number"
                           class="form-control form-control-alternative"
                           placeholder="Phone number"
                           value="{{ profile.phone_number }}"

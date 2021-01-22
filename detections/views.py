@@ -16,7 +16,8 @@ from detections.forms import DetectionForm
 from detections.models import Detection, Note
 
 # MyApps
-from azucar.app import SaveFile, CalculateVi, SaveDetection, MakeCloustering
+from azucar.app import CalculateVi, MakeCloustering
+from azucar.SaveFiles import SaveFile,SaveDetection
 
 
 class IndexView(LoginRequiredMixin, ListView):
@@ -41,7 +42,6 @@ class DetectionDetailView(LoginRequiredMixin, DetailView, SingleTableView):
     model = Detection
     context_object_name = 'detection'
 
-
     def __init__(self, *args, **kwargs):
         super(DetectionDetailView, self).__init__(*args, **kwargs)
         self.object_list = self.get_queryset()
@@ -56,17 +56,35 @@ class DetectionDetailView(LoginRequiredMixin, DetailView, SingleTableView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data()
-        if 'cloustering' in request.POST:
+        if 'cloustering_ndvi' in request.POST:
             detection = self.get_object()
-            if int(request.POST['n_clouster']) != 0:
-                if request.POST['type_vi'] == 'ndvi':
-                    type_vi = 'ndvi'
-                    number = request.POST['n_clouster']
-                    picture_url = detection.picture_ndvi.url
+            if int(request.POST['n_clouster_ndvi']) != 0:
+                number = request.POST['n_clouster_ndvi']
+                type_vi = 'ndvi'
+                picture_url = detection.picture_ndvi.url
 
-                    MakeCloustering(request.user,int(number),picture_url)
+                MakeCloustering(request.user,int(number),picture_url)
+                context['done_clouster'] = type_vi
 
-                    context['done_clouster'] = type_vi
+        elif 'cloustering_savi' in request.POST:
+            detection = self.get_object()
+            if int(request.POST['n_clouster_savi']) != 0:
+                number = request.POST['n_clouster_savi']
+                type_vi = 'savi'
+                picture_url = detection.picture_savi.url
+
+                MakeCloustering(request.user,int(number),picture_url)
+                context['done_clouster'] = type_vi
+
+        elif 'cloustering_evi2' in request.POST:
+            detection = self.get_object()
+            if int(request.POST['n_clouster_evi2']) != 0:
+                number = request.POST['n_clouster_evi2']
+                type_vi = 'evi2'
+                picture_url = detection.picture_evi2.url
+
+                MakeCloustering(request.user,int(number),picture_url)
+                context['done_clouster'] = type_vi
 
         elif 'delete' in request.POST:
             id = request.POST['id_note']
@@ -100,10 +118,41 @@ class LastDetectionView(LoginRequiredMixin, DetailView, SingleTableView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data()
-        if 'delete' in request.POST:
+        if 'cloustering_ndvi' in request.POST:
+            detection = self.get_object()
+            if int(request.POST['n_clouster']) != 0:
+                number = request.POST['n_clouster']
+                type_vi = 'ndvi'
+                picture_url = detection.picture_ndvi.url
+
+                MakeCloustering(request.user,int(number),picture_url)
+                context['done_clouster'] = type_vi
+
+        elif 'cloustering_savi' in request.POST:
+            detection = self.get_object()
+            if int(request.POST['n_clouster']) != 0:
+                number = request.POST['n_clouster']
+                type_vi = 'savi'
+                picture_url = detection.picture_savi.url
+
+                MakeCloustering(request.user,int(number),picture_url)
+                context['done_clouster'] = type_vi
+
+        elif 'cloustering_evi2' in request.POST:
+            detection = self.get_object()
+            if int(request.POST['n_clouster']) != 0:
+                number = request.POST['n_clouster']
+                type_vi = 'evi2'
+                picture_url = detection.picture_evi2.url
+
+                MakeCloustering(request.user,int(number),picture_url)
+                context['done_clouster'] = type_vi
+
+        elif 'delete' in request.POST:
             id = request.POST['id_note']
             note_instance= Note.objects.get(id=id)
             note_instance.delete()
+
         return render(request, 'detections/detail.html', context)
 
 

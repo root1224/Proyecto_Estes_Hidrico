@@ -32,6 +32,13 @@ class Detection(models.Model):
     picture_ndvi = models.ImageField(
         upload_to='detections/NDVI'
     )
+    picture_savi = models.ImageField(
+        upload_to='detections/SAVI'
+    )
+    picture_evi2 = models.ImageField(
+        upload_to='detections/EVI2'
+    )
+
 
     satatus_of_field = models.CharField(
         max_length=10,

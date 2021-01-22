@@ -33,8 +33,8 @@
                           <a class="dropdown-item" href="#">Without ground</a>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" id="ndvi-tab" data-toggle="tab" href="#ndvi" role="tab" aria-controls="ndvi" >NDVI</a>
-                          <a class="dropdown-item" href="#">SAVI</a>
-                          <a class="dropdown-item" href="#">EVI2</a>
+                          <a class="dropdown-item" id="savi-tab" data-toggle="tab" href="#savi" role="tab" aria-controls="savi" >SAVI</a>
+                          <a class="dropdown-item" id="evi2-tab" data-toggle="tab" href="#evi2" role="tab" aria-controls="evi2" >EVI2</a>
                         </div>
                       </li>
                     </ul>
@@ -44,7 +44,7 @@
 
               <div class="card-body">
                 <div class="tab-content card shadow border-0">
-
+                  <!-- New RGB -->
                   <div class="tab-pane fade show active" id="rgb" role="tabpanel" aria-labelledby="rgb-tab">
                     {% if save_detect %}
                       <img width="272px" name="picture" src="{{MEDIA_URL}}/temp/bands/{{request.user.username}}/RGB_temp.JPG" alt="RGB" />
@@ -53,14 +53,32 @@
                     {% endif %}
                   </div>
 
+                  <!-- New NDVI -->
                   <div class="tab-pane fade" id="ndvi" role="tabpanel" aria-labelledby="ndvi-tab">
                     {% if save_detect %}
                       <img width="272px" name="picture_ndvi" src="{{MEDIA_URL}}/temp/results/{{request.user.username}}/NDVI.jpg" alt="NDVI" />
                     {% else %}
-                      <img width="276px" src="{% static 'assets/img/theme/default_image.jpg' %}" alt="RGB"/>
+                      <img width="276px" src="{% static 'assets/img/theme/default_image.jpg' %}"/>
                     {% endif %}
                   </div>
 
+                  <!-- New SAVI -->
+                  <div class="tab-pane fade" id="savi" role="tabpanel" aria-aria-controls="savi-tab">
+                    {% if save_detect %}
+                      <img width="272px" name="picture_savi" src="{{MEDIA_URL}}/temp/results/{{request.user.username}}/SAVI.jpg" alt="SAVI" />
+                    {% else %}
+                      <img width="276px" src="{% static 'assets/img/theme/default_image.jpg' %}"/>
+                    {% endif %}
+                  </div>
+
+                  <!-- New EVI2 -->
+                  <div class="tab-pane fade" id="evi2" role="tabpanel" aria-aria-controls="evi2-tab">
+                    {% if save_detect %}
+                      <img width="272px" name="picture_evi2" src="{{MEDIA_URL}}/temp/results/{{request.user.username}}/EVI2.jpg" alt="EVI2" />
+                    {% else %}
+                      <img width="276px" src="{% static 'assets/img/theme/default_image.jpg' %}"/>
+                    {% endif %}
+                  </div>
 
                 </div>
               </div>
